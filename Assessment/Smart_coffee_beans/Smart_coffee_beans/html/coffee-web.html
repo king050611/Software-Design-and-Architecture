@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee-Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!--引入icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css">
+    <!--引入bootstrap-->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!--引入boxicons-->
+    <link rel="stylesheet" href="../css/coffee-css.css"> <!--引入自己的css-->
+</head>
+
+<body>
+    <header class="header fixed-top"> <!--头部 fixed-top Bootstrap 类 将导航栏固定在页面的顶部-->
+        <div class="container"> <!--容器-->
+            <div class="row align-items-center"> <!-- Bootstrap 类 将子元素整体居中-->
+                <a href="#" class="logo mr-auto"><img src="../photo/logo.png" alt="后期放个logo"><span>coffee time
+                        machine</span></a>
+                <!--logo-->
+                <!--mr-auto Bootstrap 类 将元素向右对齐-->
+                <nav class="navigation"> <!--导航-->
+                    <a href="#home" class="iconContainer"><i class="fa-solid fa-house"></i><span
+                            class="tooltip">Home</span></a>
+                    <a href="#about">about</a> <!--咖啡小知识-->
+                    <a href="#shop">shop</a> <!--商店-->
+                    <a href="#" id="order-tracking-link" style="display: none;">orders</a> <!--订单追踪-->
+                    <a href="#" id="admin-dashboard-link" style="display: none;">admin</a> <!--管理员面板-->
+                    <a href="#login" class="iconContainer" id="loginIcon"><i class="fa-solid fa-circle-user"></i><span
+                            class="tooltip">Login</span></a> <!--登录-->
+                    <div id="userMenu" class="user-menu">
+                        <a href="user-profile.html">profile</a>
+                        <a href="#" id="my-orders-link">my orders</a>
+                        <a href="#" id="wishlist-link">wishlist</a>
+                        <a href="#" id="logout">quit</a>
+                    </div>        
+                </nav>
+                <div class="icons">
+                    <div id="menu-btn" class="fas fa-bars"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="login">
+        <form class="log-in" action="">
+            <div id="close1" class="fa-solid fa-circle-xmark"></div> <!--关闭按钮-->
+            <h3 class="loginerror">error</h3>
+            <h3 class="loginsuccess">Success</h3>
+            <h2>Log In</h2>
+            <label for="email" class="user">email:</label>
+            <input type="email" placeholder="enter your email" class="enter" id="login-email">
+            <label for="password" class="user">password:</label>
+            <input type="password" placeholder="enter your password" class="enter" id="login-password">
+            <div class="flex">
+                <input type="checkbox" name="" id="remember">
+                <label for="remember">remember me</label>
+                <a href="#" class="forget-password-link">forget password?</a>
+            </div>
+            <input type="submit" value="sign in" class="login-submitButton">
+            <p class="account">Don't have an account? <a href="#" class="signup-button">sign up</a></p>
+        </form>
+
+    </div>
+
+
+    <div class="signup">
+        <form action="">
+            <div id="close2" class="fa-solid fa-circle-xmark"></div> <!--关闭按钮-->
+            <h3 class="signuperror">error</h3>
+            <h3 class="signupsuccess">Success</h3>
+            <h2>Sign Up</h2>
+            <label for="username" class="user">username:</label>
+            <input type="text" placeholder="enter your username" class="enter" id="signup-username">
+            <label for="email" class="user">email:</label>
+            <input type="email" placeholder="enter your email" class="enter" id="signup-email">
+            <label for="password" class="user">password:</label>
+            <input type="password" placeholder="enter your password" class="enter" id="signup-password1">
+            <label for="password" class="user">please enter your password again:</label>
+            <input type="password" placeholder="enter your password" class="enter" id="signup-password2">
+            <div class="flex">
+                <input type="checkbox" name="" id="remember">
+                <label for="remember">I accept the terms & conditions</label>
+            </div>
+            <input type="submit" value="create account" class="signup-submitButton">
+            <p class="account">Already have an account? <a href="#" class="login-button">login</a></p>
+        </form>
+
+    </div>
+
+    <div class="forget-password">
+        <form action="">
+            <div id="close3" class="fa-solid fa-circle-xmark"></div> <!--关闭按钮-->
+            <h3 class="forgeterror">error</h3>
+            <h3 class="forgetsuccess">Success</h3>
+            <h2>Forget Password</h2>
+            <label for="email" class="user">email:</label>
+            <input type="email" placeholder="enter your email" class="enter" id="forget-email">
+            <button type="button" class="send-code-button">Send Code</button>
+            <label for="code" class="user">verification code:</label>
+            <span id="generated-code" class="generated-code"></span>
+            <input type="text" placeholder="enter the code" class="enter" id="verification-code">
+            <label for="new-password" class="user">New Password:</label>
+            <input type="password" placeholder="enter your new password" class="enter" id="new-password">
+            <label for="confirm-password" class="user">Confirm New Password:</label>
+            <input type="password" placeholder="confirm your new password" class="enter" id="confirm-password">
+            <input type="submit" value="verify" class="verify-code-button">
+            <p class="account">Don't have an account? <a href="#" class="signup-button">sign up</a></p>
+        </form>
+    </div>
+
+
+    <section class="home" id="home">
+        <div class="container">
+            <div class="">
+                <div class="slidershow middle">
+                    <div class="slides">
+                        <input type="radio" name="r" id="r1">
+                        <input type="radio" name="r" id="r2">
+                        <input type="radio" name="r" id="r3">
+                        <input type="radio" name="r" id="r4">
+                        <input type="radio" name="r" id="r5">
+                        <div class="slide s1">
+                            <img src="https://wallpaperaccess.com/full/1425544.jpg" alt="">
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.pexels.com/photos/129207/pexels-photo-129207.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                alt="">
+                        </div>
+                        <div class="slide">
+                            <img src="https://cdn.pixabay.com/photo/2015/05/07/13/46/cappuccino-756490_1280.jpg" alt="">
+                        </div>
+                        <div class="slide">
+                            <img src="https://cdn.pixabay.com/photo/2023/09/30/17/13/coffee-beans-8286087_1280.jpg"
+                                alt="">
+                        </div>
+                        <div class="slide">
+                            <img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537_1280.jpg"
+                                alt="">
+                        </div>
+                    </div>
+                    <div class="imgnavigation">
+                        <label for="r1" class="bar changeColor"></label>
+                        <label for="r2" class="bar"></label>
+                        <label for="r3" class="bar"></label>
+                        <label for="r4" class="bar"></label>
+                        <label for="r5" class="bar"></label>
+                    </div>
+                </div>
+                <div class="home-maker row align-items-center text-center text-md-left min-vh-100">
+                    <div class="col-md-6">
+                        <h2 class="coffee-house">Coffee house</h2>
+                        <p class="font">Let's enjoy coffee!</p>
+                        <a href="#about" class="link-btn">get started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <h1 class="heading">about</h1>
+        <div class="carousel_about">
+            <div class="img-box">
+              <div class="img-list">
+                <div class="img-slider">
+                  <div class="img-item active" style="--i: 1">
+                    <div class="item">
+                      <img src="../photo/bean1.png" alt="" />
+                    </div>
+                  </div>
+                  <div class="img-item" style="--i: 2">
+                    <div class="item">
+                      <img src="../photo/肯尼亚咖啡豆.png" alt="" />
+                    </div>
+                  </div>
+                  <div class="img-item" style="--i: 3">
+                    <div class="item">
+                      <img src="../photo/安提瓜咖啡豆.png" alt="" />
+                    </div>
+                  </div>
+                  <div class="img-item" style="--i: 4">
+                    <div class="item">
+                      <img src="../photo/埃塞俄比亚咖啡豆.png" alt="" />
+                    </div>
+                  </div>
+                  <div class="img-item" style="--i: 5">
+                    <div class="item">
+                      <img src="../photo/bean2.png" alt="" />
+                    </div>
+                  </div>
+                  <div class="img-item" style="--i: 6">
+                    <div class="item">
+                      <img src="../photo/bean3.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <div class="info-box">
+              <div class="info-item active">
+                <h2>Colombia Coffee Bean</h2>
+                <h2>$59.99</h2>
+                <p>
+                    Colombian coffee beans are known for their medium roast and balanced taste. It has subtle nutty
+                    and fresh herbal flavors with moderate acidity and alcohol. Enjoy with milk and chocolate or
+                    nuts. The story of this coffee bean tells of an adventurous journey, climbing mountains, wading
+                    water and traversing jungles just to taste a cup of Colombian coffee. The spirit of adventure it
+                    presents - the fearless courage in the face of difficulties - is a quality we need to learn in
+                    life.
+                </p>
+                <a href="#" class="btn">Buy Now</a>
+              </div>
+      
+              <div class="info-item">
+                <h2>Kenya Coffee Bean</h2>
+                <h2>$49.99</h2>
+                <p>
+                    Kenyan coffee beans are known for their distinctive grapefruit and blackcurrant flavors, which
+                    are particularly prominent when refrigerated. The acidity of this coffee bean is high, and the
+                    alcohol is noble. It is recommended with grapefruit and berries. With its refreshing acidity and
+                    wine-like texture, Kenyan coffee is often found in many Summer seasonal blends, such as KatiKati
+                    and Summer Breeze.
+                </p>
+                <a href="#" class="btn">Buy Now</a>
+              </div>
+      
+              <div class="info-item">
+                <h2>Antigua, Guatemala Coffee Bean</h2>
+                <h2>$69.99</h2>
+                <p>
+                    Guatemalan Antigua coffee beans are appreciated for their elegant and delicate flavor, cocoa and
+                    soft spice notes, as well as slight lemon notes. Both acidity and alcohol are moderate. It is
+                    recommended to serve with French Passion chocolate cake or cinnamon sugar apple. The story of
+                    this coffee bean underscores the irreplaceability of Antigua, whether as a cup of coffee,
+                    something to hold on to, or a language. Its fragrance drips down and penetrates the soul.
+                </p>
+                <a href="#" class="btn">Buy Now</a>
+              </div>
+      
+              <div class="info-item">
+                <h2>Ethiopia Coffee Bean</h2>
+                <h2>$59.99</h2>
+                <p>
+                    Ethiopian coffee beans are known for their light dark chocolate, sweet orange flavor and a hint
+                    of green pepper spicy aftertaste. High acidity, moderate alcohol. It is recommended to serve
+                    with classic Black Forest cake or French Passion chocolate cake. This coffee bean, with its
+                    unique flavor and high-quality taste, has become a favorite of coffee lovers.
+                </p>
+                <a href="#" class="btn">Buy Now</a>
+              </div>
+      
+              <div class="info-item">
+                <h2>Flona Coffee Bean</h2>
+                <h2>$79.99</h2>
+                <p>
+                    This is a coffee full of love, has been known by three names. 
+                    Starbucks first created this coffee bean for a Seattle restaurant in 1975, when 
+                    it was named Jack Integrated Coffee Bean. Due to its popularity, Starbucks began hand-blending the 
+                    coffee beans for customers in its stores, and decided to name it 80/20 Blend coffee based on the blending ratio. The enduring 
+                    love and admiration of Starbucks customers for this coffee eventually led to its inclusion in the official Starbucks product line, named Flona, 
+                    in honor of the city's many inspirations. No matter which name, it conveys the romantic story of this coffee.
+                </p>
+                <a href="#" class="btn">Buy Now</a>
+              </div>
+      
+              <div class="info-item">
+                <h2>Italian Roasted Coffee Bean</h2>
+                <h2>$39.99</h2>
+                <p>
+                    The name alone seems to represent a love of all that is good about Italy: the food, the Scooter, the Espresso and the passionate lifestyle. It's like a nostalgic black and white movie, endlessly telling the funny stories of life.
+                    Italian Roast represents a very deep roast. At one time, it was difficult to find coffee beans that would be roasted until the second time, because the common raw bean quality at that time could not withstand deeper roasting. 
+                    It is now generally believed that on the East Coast of the United States, the deepest baking is Italian, and on the West Coast, the deepest baking is French.
+                </p>
+                <a href="#" class="btn">Buy Now</a>
+              </div>
+            </div>
+      
+            <div class="navigation">
+              <span class="prev-btn">
+                <i class="bx bx-chevron-left"></i>
+              </span>
+              <span class="next-btn">
+                <i class="bx bx-chevron-right"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- Shop Section with Search, Filter, and Sort -->
+    <section class="shop" id="shop">
+        <h1 class="heading">Shop</h1>
+        <div class="container">
+            <!-- Search and Filter Bar -->
+            <div class="shop-controls">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search coffee beans...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-sort-container">
+                    <select id="category-filter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="light">Light Roast</option>
+                        <option value="medium">Medium Roast</option>
+                        <option value="dark">Dark Roast</option>
+                    </select>
+                    <select id="origin-filter" class="filter-select">
+                        <option value="all">All Origins</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Blend">Blend</option>
+                    </select>
+                    <select id="sort-select" class="filter-select">
+                        <option value="default">Sort By</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Recommendations Section -->
+            <div class="recommendations-section" id="recommendations-section" style="display: none;">
+                <h2 class="recommendations-heading">Recommended for You</h2>
+                <div class="recommendations-container" id="recommendations-container"></div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-grid"></div>
+            
+            <!-- Cart Icon -->
+            <div class="cart-icon" id="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <span class="close-cart" id="close-cart">&times;</span>
+            </div>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total: $<span id="cart-total">0.00</span></strong>
+                </div>
+                <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkout-modal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h2>Checkout</h2>
+                <span class="close-checkout" id="close-checkout">&times;</span>
+            </div>
+            <form id="checkout-form">
+                <div class="checkout-section">
+                    <h3>Shipping Information</h3>
+                    <input type="text" id="shipping-name" placeholder="Full Name" required>
+                    <input type="text" id="shipping-address" placeholder="Address" required>
+                    <input type="text" id="shipping-city" placeholder="City" required>
+                    <input type="text" id="shipping-zip" placeholder="ZIP Code" required>
+                    <input type="text" id="shipping-phone" placeholder="Phone Number" required>
+                </div>
+                <div class="checkout-section">
+                    <h3>Payment Information</h3>
+                    <select id="payment-method" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="stripe">Stripe</option>
+                    </select>
+                    <div id="card-details" style="display: none;">
+                        <input type="text" id="card-number" placeholder="Card Number" maxlength="19">
+                        <input type="text" id="card-name" placeholder="Cardholder Name">
+                        <div class="card-row">
+                            <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                            <input type="text" id="card-cvv" placeholder="CVV" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkout-items"></div>
+                    <div class="checkout-total">
+                        <strong>Total: $<span id="checkout-total">0.00</span></strong>
+                    </div>
+                </div>
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Tracking Modal -->
+    <div class="order-tracking-modal" id="order-tracking-modal">
+        <div class="tracking-content">
+            <div class="tracking-header">
+                <h2>Order Tracking</h2>
+                <span class="close-tracking" id="close-tracking">&times;</span>
+            </div>
+            <div id="order-tracking-content"></div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Modal -->
+    <div class="admin-dashboard-modal" id="admin-dashboard-modal">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Admin Dashboard</h2>
+                <span class="close-admin" id="close-admin">&times;</span>
+            </div>
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="products">Products</button>
+                <button class="admin-tab" data-tab="orders">Orders</button>
+                <button class="admin-tab" data-tab="analytics">Analytics</button>
+            </div>
+            <div class="admin-tab-content" id="admin-products">
+                <h3>Product Management</h3>
+                <button class="add-product-btn" id="add-product-btn">Add New Product</button>
+                <div class="admin-products-list" id="admin-products-list"></div>
+            </div>
+            <div class="admin-tab-content" id="admin-orders" style="display: none;">
+                <h3>Order Management</h3>
+                <div class="admin-orders-list" id="admin-orders-list"></div>
+            </div>
+            <div class="admin-tab-content" id="admin-analytics" style="display: none;">
+                <h3>Sales Analytics</h3>
+                <div class="analytics-stats" id="analytics-stats"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <section class="menu" id="menu">
+
+        <h1 class="heading">menu</h1>
+
+        <div class="menu-box">
+            <div class="container item-container">
+                <div class="item">
+                    <img src="..\photo\Americano.png" alt="">
+                    <h3>Americano</h3>
+                    <p>Americano, like a simple jazz, does not need gorgeous decoration, it can show the purest charm of
+                        coffee beans. Each bite is a tribute to the essence of coffee, fresh without losing depth,
+                        simple yet full of character. It is not only a drink, but also a reflection of life attitude -
+                        simple but not simple, ordinary to see the extraordinary</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\latte.png" alt="">
+                    <h3 class="name">clatte</h3>
+                    <p class="explain">Latte, with mellow concentrate as the base, through the collision with milk, to
+                        stimulate the mellow aroma of milk, thick mouth, warm heart. Taste, milk mellow with the
+                        bitterness of coffee, write a magnificent movement</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\cappuccino.png" alt="">
+                    <h3 class="name">cappuccino</h3>
+                    <p class="explain">Latte, with mellow concentrate as the base, through the collision with milk, to
+                        stimulate the mellow aroma of milk, thick mouth, warm heart. Taste, milk mellow with the
+                        bitterness of coffee, write a magnificent movement</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\Caramel macchiato.png" alt="">
+                    <h3 class="name">Caramel macchiato</h3>
+                    <p class="explain">The combination of caramel macchiato, milk and coffee liquid may still have a
+                        slightly bitter taste, but coupled with the sweetness of caramel, this drink has a quality
+                        improvement, the sweetness of caramel, with the mellow aroma of milk, with the fresh sense of
+                        coffee, bring a novel feeling to the tip of the guest's tongue.</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\mocha.png" alt="">
+                    <h3 class="name">mocha</h3>
+                    <p class="explain">Mocha's reputation stems from its rich flavor, appealing presentation,
+                        versatility, and emotional significance. These qualities solidify its cherished status among
+                        coffee enthusiasts. As both a sensory delight and a comforting presence, mocha remains a vital
+                        part of coffee culture, captivating palates and hearts with its distinct allure.</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\Flat white.png" alt="">
+                    <h3 class="name">Flat white</h3>
+                    <p class="explain">The main characteristics of the taste are rich coffee aroma, silky milk foam,
+                        balanced sour and sweet degree, rich taste level and moderate coffee concentration. These
+                        characteristics make flat white become a favorite coffee drink for many people, whether it is
+                        coffee lovers or ordinary consumers, they can find their favorite taste in the process of
+                        tasting flat white.</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\Italian espresso.png" alt="">
+                    <h3 class="name">Italian espresso/h3>
+                        <p class="explain">Espresso, with its rich flavor and deep color, is known as the "black gold"
+                            in coffee. Like a drop of flowing amber, the soul of the coffee bean is condensed, and each
+                            bite is the ultimate challenge to the taste. Its strong aroma, as if it can penetrate the
+                            barriers of time, wake up the sleeping memory, let people find a moment of peace in the
+                            busy.</p>
+                </div>
+                <div class="item">
+                    <img src="..\photo\Matcha latte.png" alt="">
+                    <h3 class="name">Matcha latte</h3>
+                    <p class="explain">Matcha latte, like a touch of fresh green on a spring day, blends Oriental tea
+                        charm with Western milk perfectly. Its delicate foam moves gently on the tip of the tongue, like
+                        the cherry petals in the spring breeze, light without losing depth. Each bite of the matcha
+                        latte is a taste trip, taking you through the teahouses of Kyoto to experience the tranquility
+                        and harmony.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section> -->
+    <!-- <section class="activity" id="activity">
+        <header>
+
+        </header>
+        <main>
+            <section class="carousel next">
+              <span class="Topic">Activity</span>
+              <div class="list">
+                <article class="item other_1">
+                  <div class="main-content" style="background-color: rgb(126,69,38)">
+                    <div class="content">
+                        <img src="../photo/活动3.png" alt="" />
+                    </div>
+                  </div>
+                  <figure class="image">
+                    <img src="../photo/活动3杯.png" alt="" />
+                    <figcaption>Activity: Free Tasting</figcaption>
+                  </figure>
+                </article>
+                <article class="item active">
+                  <div class="main-content" style="background-color: rgb(129,143,176)">
+                    <div class="content">
+                        <img src="../photo/活动1.png" alt="" />
+                    </div>
+                  </div>
+                  <figure class="image">
+                    <img src="../photo/活动1杯.png" alt="" />
+                    <figcaption>Activity: Coffee Museum</figcaption>
+                  </figure>
+                </article>
+      
+                <article class="item other_2">
+                  <div class="main-content" style="background-color: rgb(215,181,144)">
+                    <div class="content">
+                        <img src="../photo/活动2.png" alt="" />
+                    </div>
+                  </div>
+                  <figure class="image">
+                    <img src="../photo/活动2杯.png" alt="" />
+                    <figcaption>Activity: Cafe Board Game</figcaption>
+                  </figure>
+                </article>
+                <article class="item">
+                  <div class="main-content" style="background-color: rgb(78,88,110)">
+                    <div class="content">
+                        <img src="../photo/活动5.png" alt="" />
+                    </div>
+                  </div>
+                  <figure class="image">
+                    <img src="../photo/活动5杯.png" alt="" />
+                    <figcaption>Activity: Midnight Opera</figcaption>
+                  </figure>
+                </article>
+              </div>
+              <div class="arrows">
+                <button id="prev"></button>
+                <button id="next"></button>
+              </div>
+            </section>
+          </main>
+
+    </section>
+
+    <section class="contact" id="contact">
+        <h1 class="heading"> contact us  </h1>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-5 mb-md-0 ">
+                    <iframe class="map w-100" src="https://map.baidu.com/search/%E5%92%96%E5%95%A1%E5%8E%85/@12583231,2633711,13z?querytype=nb&r=1000&c=138&wd=%E5%92%96%E5%95%A1%E5%8E%85&uid=30d972e1f212002f89f15d83&l=13&gr_radius=1000&pn=0&device_ratio=2&da_src=shareurl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <form action="" class="col-md-6">
+                    <h3>keep in touch</h3>
+                    <input type="text" placeholder="your name" class="box">
+                    <input type="email" placeholder="email" class="box">
+                    <input type="number" placeholder="phone" class="box">
+                    <textarea name="" placeholder="message" class="box" id="" cols="30" rows="10"></textarea>
+                    <input type="submit" value="comment" class="link-btn">
+                </form>
+            </div>
+        </div>
+
+    </section> -->
+
+    <section class="foot container">
+        <a href="#" class="logo"> <i class="fas fa-mug-hot"></i> coffee </a>
+        <div class="share">
+            <a href="#" class="fa-brands fa-facebook"></a>
+            <a href="#" class="fa-brands fa-x-twitter"></a>
+            <a href="#" class="fa-brands fa-instagram"></a>
+            <a href="#" class="fa-brands fa-github"></a>
+        </div>
+
+    </section>
+
+    <script src="../js/coffee-js.js"></script> <!--引入自己的js-->
+    <script src="../js/mock-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+</body>
+
+</html>

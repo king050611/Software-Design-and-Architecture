@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精品咖啡豆订购 - Coffee Beans</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-coffee"></i>
+                <span>精品咖啡豆</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active" data-page="home">首页</a>
+                <a href="#" class="nav-link" data-page="products">产品</a>
+                <a href="#" class="nav-link" data-page="cart">购物车 <span class="cart-count">0</span></a>
+                <a href="#" class="nav-link" data-page="orders">我的订单</a>
+                <a href="#" class="nav-link" data-page="admin" id="admin-link" style="display: none;">管理</a>
+                <div class="user-menu">
+                    <a href="#" class="nav-link" data-page="profile" id="profile-link" style="display: none;">
+                        <i class="fas fa-user"></i> 个人中心
+                    </a>
+                    <a href="#" class="nav-link" id="login-link" data-page="login">登录</a>
+                    <a href="#" class="nav-link" id="logout-link" style="display: none;" onclick="logout()">退出</a>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页 -->
+    <section id="home-page" class="page active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>发现世界顶级咖啡豆</h1>
+                <p>从世界各地精选的优质咖啡豆，为您带来独特的味觉体验</p>
+                <button class="btn-primary" onclick="showPage('products')">立即选购</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- 搜索和筛选 -->
+            <div class="search-filter-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="搜索咖啡豆...">
+                </div>
+                <div class="filter-controls">
+                    <select id="sort-select">
+                        <option value="default">默认排序</option>
+                        <option value="price-asc">价格：低到高</option>
+                        <option value="price-desc">价格：高到低</option>
+                        <option value="name-asc">名称：A-Z</option>
+                        <option value="rating-desc">评分：高到低</option>
+                    </select>
+                    <select id="filter-origin">
+                        <option value="all">所有产地</option>
+                        <option value="Ethiopia">埃塞俄比亚</option>
+                        <option value="Colombia">哥伦比亚</option>
+                        <option value="Brazil">巴西</option>
+                        <option value="Kenya">肯尼亚</option>
+                        <option value="Indonesia">印度尼西亚</option>
+                    </select>
+                    <select id="filter-roast">
+                        <option value="all">所有烘焙度</option>
+                        <option value="Light">浅烘</option>
+                        <option value="Medium">中烘</option>
+                        <option value="Dark">深烘</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 推荐产品 -->
+            <div class="recommendations-section" id="recommendations-section" style="display: none;">
+                <h2><i class="fas fa-star"></i> 为您推荐</h2>
+                <div class="products-grid" id="recommendations-grid"></div>
+            </div>
+
+            <!-- 产品展示 -->
+            <h2 class="section-title">精选产品</h2>
+            <div class="products-grid" id="products-grid"></div>
+        </div>
+    </section>
+
+    <!-- AI 产品顾问页 -->
+    <section id="products-page" class="page">
+        <div class="container ai-page">
+            <div class="ai-header">
+                <div>
+                    <h2><i class="fas fa-robot"></i> 咖啡豆智能顾问</h2>
+                    <p class="ai-subtitle">向AI咖啡师提问，获取风味解析、冲煮建议和个性化推荐。</p>
+                </div>
+                <p class="ai-context-line" id="ai-context-line">
+                    登录后我可以记住你的口味、购物车和订单，提供更精准的建议。
+                </p>
+            </div>
+
+            <div class="ai-suggestions" id="ai-suggestions">
+                <button class="ai-suggestion" data-question="我喜欢坚果和巧克力味，有什么推荐吗？">
+                    <i class="fas fa-comment-dots"></i> 坚果巧克力风味
+                </button>
+                <button class="ai-suggestion" data-question="想做手冲咖啡，适合选什么烘焙度？">
+                    <i class="fas fa-coffee"></i> 手冲烘焙度
+                </button>
+                <button class="ai-suggestion" data-question="有没有酸度高一些的豆子？">
+                    <i class="fas fa-lemon"></i> 高酸度豆子
+                </button>
+                <button class="ai-suggestion" data-question="给我一份适合拿铁的拼配推荐">
+                    <i class="fas fa-mug-hot"></i> 拿铁拼配
+                </button>
+            </div>
+
+            <div class="ai-layout">
+                <div class="ai-chat-panel">
+                    <div class="ai-chat-history" id="ai-chat-history">
+                        <div class="ai-message ai-message-ai">
+                            <div class="ai-message-role">
+                                <i class="fas fa-robot"></i><span>豆豆顾问</span>
+                            </div>
+                            <p>嗨，我是咖啡AI豆豆，告诉我你喜欢的风味或冲煮方式，我来帮你挑选。</p>
+                        </div>
+                    </div>
+                    <form id="ai-chat-form" class="ai-chat-form">
+                        <textarea id="ai-question-input" rows="3" placeholder="例如：我想找一款适合冰手冲的浅烘豆子..."></textarea>
+                        <div class="ai-form-footer">
+                            <span class="ai-form-tip">AI会结合你的订单、收藏和库存信息回答。</span>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-paper-plane"></i> 发送
+                            </button>
+                        </div>
+                    </form>
+                    <div class="ai-status-bar" id="ai-status"></div>
+                </div>
+
+                <div class="ai-recommendations-panel">
+                    <h3><i class="fas fa-star"></i> 个性化推荐</h3>
+                    <p class="ai-recommendations-tip">AI为你挑选的咖啡豆会显示在这里。</p>
+                    <div class="ai-recommendations" id="ai-recommendations">
+                        <div class="ai-empty">
+                            <i class="fas fa-magic"></i>
+                            <p>向AI提问后，这里会出现为你定制的豆单。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品详情页 -->
+    <section id="product-detail-page" class="page">
+        <div class="container">
+            <button class="back-btn" onclick="showPage('products')">
+                <i class="fas fa-arrow-left"></i> 返回
+            </button>
+            <div class="product-detail" id="product-detail"></div>
+        </div>
+    </section>
+
+    <!-- 购物车页 -->
+    <section id="cart-page" class="page">
+        <div class="container">
+            <h2 class="page-title">购物车</h2>
+            <div class="cart-content" id="cart-content">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>购物车是空的</p>
+                    <button class="btn-primary" onclick="showPage('products')">去购物</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 登录/注册页 -->
+    <section id="login-page" class="page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">登录</button>
+                    <button class="auth-tab" data-tab="register">注册</button>
+                </div>
+                
+                <div class="auth-form active" id="login-form">
+                    <h2>欢迎回来</h2>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>密码</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">登录</button>
+                    </form>
+                </div>
+
+                <div class="auth-form" id="register-form">
+                    <h2>创建账户</h2>
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label>姓名</label>
+                            <input type="text" id="register-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>密码</label>
+                            <input type="password" id="register-password" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>确认密码</label>
+                            <input type="password" id="register-confirm" required>
+                        </div>
+                        <button type="submit" class="btn-primary">注册</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个人中心页 -->
+    <section id="profile-page" class="page">
+        <div class="container">
+            <h2 class="page-title">个人中心</h2>
+            <div class="profile-content">
+                <div class="profile-sidebar">
+                    <div class="profile-menu">
+                        <a href="#" class="profile-menu-item active" data-section="info">个人信息</a>
+                        <a href="#" class="profile-menu-item" data-section="orders">订单历史</a>
+                        <a href="#" class="profile-menu-item" data-section="wishlist">收藏夹</a>
+                    </div>
+                </div>
+                <div class="profile-main">
+                    <div class="profile-section active" id="profile-info">
+                        <h3>个人信息</h3>
+                        <form onsubmit="updateProfile(event)">
+                            <div class="form-group">
+                                <label>姓名</label>
+                                <input type="text" id="profile-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>邮箱</label>
+                                <input type="email" id="profile-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>电话</label>
+                                <input type="tel" id="profile-phone">
+                            </div>
+                            <div class="form-group">
+                                <label>地址</label>
+                                <textarea id="profile-address" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">保存更改</button>
+                        </form>
+                    </div>
+                    <div class="profile-section" id="profile-orders">
+                        <h3>订单历史</h3>
+                        <div id="orders-list"></div>
+                    </div>
+                    <div class="profile-section" id="profile-wishlist">
+                        <h3>收藏夹</h3>
+                        <div class="products-grid" id="wishlist-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订单页 -->
+    <section id="orders-page" class="page">
+        <div class="container">
+            <h2 class="page-title">我的订单</h2>
+            <div id="orders-content"></div>
+        </div>
+    </section>
+
+    <!-- 管理员仪表板 -->
+    <section id="admin-page" class="page">
+        <div class="container">
+            <h2 class="page-title">管理仪表板</h2>
+            <div class="admin-dashboard">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <h3>总销售额</h3>
+                        <p class="stat-value" id="total-sales">¥0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>订单总数</h3>
+                        <p class="stat-value" id="total-orders">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>产品总数</h3>
+                        <p class="stat-value" id="total-products">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>用户总数</h3>
+                        <p class="stat-value" id="total-users">0</p>
+                    </div>
+                </div>
+
+                    <div class="admin-utilities">
+                        <div>
+                            <h3>数据维护</h3>
+                            <p class="admin-utilities-tip">如需从零开始演示或清除异常数据，可一键清除所有本地存储。</p>
+                        </div>
+                        <button class="btn-danger" onclick="resetAllData()">
+                            <i class="fas fa-trash"></i> 一键清除所有数据
+                        </button>
+                    </div>
+                
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="products-admin">产品管理</button>
+                    <button class="admin-tab" data-tab="orders-admin">订单管理</button>
+                    <button class="admin-tab" data-tab="analytics">数据分析</button>
+                </div>
+
+                <div class="admin-content">
+                    <div class="admin-section active" id="products-admin">
+                        <div class="admin-header">
+                            <h3>产品管理</h3>
+                            <button class="btn-primary" onclick="showAddProductModal()">
+                                <i class="fas fa-plus"></i> 添加产品
+                            </button>
+                        </div>
+                        <div class="admin-table-container">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>名称</th>
+                                        <th>价格</th>
+                                        <th>库存</th>
+                                        <th>产地</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-products-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="admin-section" id="orders-admin">
+                        <h3>订单管理</h3>
+                        <div class="admin-table-container">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>订单号</th>
+                                        <th>客户</th>
+                                        <th>总价</th>
+                                        <th>状态</th>
+                                        <th>日期</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-orders-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="admin-section" id="analytics">
+                        <h3>数据分析</h3>
+                        <div class="analytics-content">
+                            <div class="chart-placeholder">
+                                <p>销售趋势图表（可集成图表库）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 模态框 -->
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- 结账模态框 -->
+    <div id="checkout-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content checkout-modal" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeCheckoutModal()">&times;</span>
+            <h2>结账</h2>
+            <div id="checkout-content"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
