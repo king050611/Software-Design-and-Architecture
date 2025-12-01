@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Coffee Bean Ordering & Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-logo">☕</span>
+        <div class="brand-text">
+          <h1>Coffee Bean Hub</h1>
+          <p>Fresh beans, smarter management.</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <button class="nav-btn" data-view="shop">Shop</button>
+        <button class="nav-btn" data-view="orders">My Orders</button>
+        <button class="nav-btn" data-view="account">Account</button>
+        <button class="nav-btn" data-view="admin">Admin Dashboard</button>
+      </nav>
+      <div class="header-right">
+        <div class="cart-indicator" id="cart-indicator">
+          <span class="icon">🛒</span>
+          <span class="label">Cart</span>
+          <span class="badge" id="cart-count">0</span>
+        </div>
+        <div class="user-indicator" id="user-indicator">
+          <span class="icon">👤</span>
+          <span class="label" id="user-label">Guest</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- Shop / Catalog View -->
+      <section class="view active" id="view-shop">
+        <div class="layout-two-columns">
+          <aside class="sidebar">
+            <h2>Search & Filter</h2>
+            <div class="form-group">
+              <label for="search-input">Search beans</label>
+              <input type="text" id="search-input" placeholder="E.g. Ethiopia, Dark Roast..." />
+            </div>
+            <div class="form-group">
+              <label for="sort-select">Sort by</label>
+              <select id="sort-select">
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating-desc">Rating: High to Low</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Roast level</label>
+              <div class="chips" id="filter-roast">
+                <button data-roast="all" class="chip chip-active">All</button>
+                <button data-roast="light" class="chip">Light</button>
+                <button data-roast="medium" class="chip">Medium</button>
+                <button data-roast="dark" class="chip">Dark</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Origin</label>
+              <div class="chips" id="filter-origin">
+                <button data-origin="all" class="chip chip-active">All</button>
+                <button data-origin="Africa" class="chip">Africa</button>
+                <button data-origin="Asia" class="chip">Asia</button>
+                <button data-origin="Latin America" class="chip">Latin America</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Recommendations</label>
+              <p class="hint">Personalized based on your orders and favorites.</p>
+              <ul class="recommendation-list" id="recommendation-list"></ul>
+            </div>
+          </aside>
+
+          <section class="content">
+            <div class="content-header">
+              <h2>Fresh Coffee Beans</h2>
+              <p>Browse, filter, and add beans to your cart.</p>
+            </div>
+            <div class="product-grid" id="product-grid"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Orders View -->
+      <section class="view" id="view-orders">
+        <div class="content-header">
+          <h2>My Orders</h2>
+          <p>Track the status of your orders in real time.</p>
+        </div>
+        <div id="orders-container" class="card-list"></div>
+      </section>
+
+      <!-- Account View -->
+      <section class="view" id="view-account">
+        <div class="layout-two-columns">
+          <section class="content">
+            <div class="content-header">
+              <h2>Account</h2>
+              <p>Manage your profile, preferences and wishlist.</p>
+            </div>
+            <div id="account-panel">
+              <!-- dynamically rendered -->
+            </div>
+          </section>
+          <aside class="sidebar secondary">
+            <h2>Wishlist</h2>
+            <ul id="wishlist-list" class="card-list mini"></ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Admin Dashboard View -->
+      <section class="view" id="view-admin">
+        <div class="content-header">
+          <h2>Admin Dashboard</h2>
+          <p>Centralized control for products, inventory and analytics.</p>
+        </div>
+        <div class="tabs" id="admin-tabs">
+          <button class="tab tab-active" data-admin-tab="products">Products</button>
+          <button class="tab" data-admin-tab="inventory">Inventory</button>
+          <button class="tab" data-admin-tab="analytics">Analytics</button>
+          <button class="tab" data-admin-tab="orders">Orders</button>
+        </div>
+        <div id="admin-content" class="admin-content">
+          <!-- dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- Cart Drawer -->
+      <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+          <h2>Your Cart</h2>
+          <button id="close-cart" class="icon-btn">✕</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+          <div class="cart-summary">
+            <div>
+              <span>Items</span>
+              <strong id="cart-summary-count">0</strong>
+            </div>
+            <div>
+              <span>Total</span>
+              <strong id="cart-summary-total">$0.00</strong>
+            </div>
+          </div>
+          <button id="checkout-btn" class="primary-btn full-width">Proceed to Checkout</button>
+          <p class="hint small">Simulated payment with secure gateway (Stripe / PayPal placeholder).</p>
+        </div>
+      </aside>
+
+      <!-- Checkout Modal -->
+      <div class="modal-backdrop" id="checkout-modal">
+        <div class="modal">
+          <div class="modal-header">
+            <h3>Secure Checkout</h3>
+            <button id="close-checkout" class="icon-btn">✕</button>
+          </div>
+          <div class="modal-body">
+            <form id="checkout-form" class="form">
+              <div class="form-group">
+                <label for="checkout-name">Full Name</label>
+                <input id="checkout-name" required placeholder="Your name" />
+              </div>
+              <div class="form-group">
+                <label for="checkout-address">Shipping Address</label>
+                <textarea id="checkout-address" required placeholder="Street, City, Country"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="checkout-method">Payment Method</label>
+                  <select id="checkout-method" required>
+                    <option value="card">Credit / Debit Card (Mock)</option>
+                    <option value="paypal">PayPal (Mock)</option>
+                    <option value="local">Local Provider (Mock)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="checkout-notes">Order Notes</label>
+                  <input id="checkout-notes" placeholder="Optional notes" />
+                </div>
+              </div>
+              <button type="submit" class="primary-btn full-width">Place Order</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>© 2025 Coffee Bean Hub. Designed with MVC architecture for SDLC coursework.</p>
+    </footer>
+  </div>
+
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/controller.js"></script>
+</body>
+</html>
+
+
